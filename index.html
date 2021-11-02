@@ -16,13 +16,33 @@
     margin: 15 0 0 0;
     color: #333;
   }
+
+  div.container div.field {
+    padding: 10px 100px;
+  }
+
+  div.container div.field input[type=text] {
+    width: 100%;
+    height: 120px;
+    border: 1px solid #c9c9c9;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 22px;
+    text-align: center;
+    color: #333;
+    word-break: break-word;
+  }
+
+  div.container div.field input[type=submit] {
+    visibility: hidden;
+  }
 </style>
 
 <div class="container">
   <h1>Guestbook</h1>
   <form action="/" method="POST">
     <div class="field">
-      <input type="text" name="message" \>
+      <input type="text" name="message" placeholder="Press ENTER to send" \>
       <input type="submit" value="Enviar"\>
     </div>
   </form>
