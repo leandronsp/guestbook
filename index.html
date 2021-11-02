@@ -1,5 +1,29 @@
-<h1>Guestbook</h1>
-<form action="/" method="POST">
-  <input type="text" name="message" \>
-  <input type="submit" value="Enviar"\>
-</form>
+<style>
+  body {
+    font-family: Helvetica;
+    background-color: #f1f1f1;
+  }
+
+  div.container {
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+  }
+
+  div.container h1 {
+    text-align: center;
+    margin: 15 0 0 0;
+    color: #333;
+  }
+</style>
+
+<div class="container">
+  <h1>Guestbook</h1>
+  <form action="/" method="POST">
+    <div class="field">
+      <input type="text" name="message" \>
+      <input type="submit" value="Enviar"\>
+    </div>
+  </form>
+</div>
