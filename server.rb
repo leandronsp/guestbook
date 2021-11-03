@@ -47,20 +47,23 @@ loop do
 
   case [verb, path]
   in ['GET', '/']
-    view     = File.read('./index.html').gsub("\n", " ")
-    rows     = File.readlines('./messages.txt')
+    view      = File.read('./index.html').gsub("\n", " ")
+    messages  = File.readlines('./messages.txt')
+    tag_regex = /<for-each messages>(.*?)<\/for-each>/
 
-    div_messages = '<div>'
+    tag_substitution = ''
 
-    list_messages = rows.each_with_object(div_messages) do |row, acc|
-      body = view.dup
+    if tag_match = view.match(tag_regex)
+      messages.each_with_object(tag_substitution) do |message, acc|
+        timestamp, text = message.split(';')
 
-      timestamp, text = row.split(';')
-      acc << "<div><small>#{timestamp}</small><p>#{text}</p></div>"
+        acc << tag_match[1].strip
+          .gsub("{{timestamp}}", timestamp)
+          .gsub("{{text}}", text)
+      end
     end
 
-    body = view.dup
-    body << "#{list_messages}</div>"
+    body     = view.gsub(tag_regex, tag_substitution)
     response = "HTTP/1.1 200\r\nContent-Type: text/html\r\n\r\n#{body}"
   in ['POST', '/']
     timestamp = Time.now.strftime('%d.%B.%Y %H:%M')
