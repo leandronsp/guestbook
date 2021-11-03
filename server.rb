@@ -45,8 +45,7 @@ loop do
   puts request
   puts
 
-  case [verb, path]
-  in ['GET', '/']
+  if verb == 'GET' && path == '/'
     view      = File.read('./index.html').gsub("\n", " ")
     messages  = File.readlines('./messages.txt')
     tag_regex = /<for-each messages>(.*?)<\/for-each>/
@@ -65,7 +64,7 @@ loop do
 
     body     = view.gsub(tag_regex, tag_substitution)
     response = "HTTP/1.1 200\r\nContent-Type: text/html\r\n\r\n#{body}"
-  in ['POST', '/']
+  elsif verb == 'POST' && path == '/'
     timestamp = Time.now.strftime('%d.%B.%Y %H:%M')
     text      = params['message'].strip
     message   = "#{timestamp};#{text}\n"
