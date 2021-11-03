@@ -47,7 +47,20 @@ loop do
 
   case [verb, path]
   in ['GET', '/']
-    body     = File.read('./index.html')
+    view     = File.read('./index.html').gsub("\n", " ")
+    rows     = File.readlines('./messages.txt')
+
+    div_messages = '<div>'
+
+    list_messages = rows.each_with_object(div_messages) do |row, acc|
+      body = view.dup
+
+      timestamp, text = row.split(';')
+      acc << "<div><small>#{timestamp}</small><p>#{text}</p></div>"
+    end
+
+    body = view.dup
+    body << "#{list_messages}</div>"
     response = "HTTP/1.1 200\r\nContent-Type: text/html\r\n\r\n#{body}"
   in ['POST', '/']
     timestamp = Time.now.strftime('%d.%B.%Y %H:%M')
